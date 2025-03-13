@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: fakeMessenger
+
+  profiles:
+    active: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:mysql://192.168.0.103:3306/fake_messenger
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.engine.jdbc.connections.pooling: off
+    org.hibernate.orm.connections.pooling: off
