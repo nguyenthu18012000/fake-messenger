@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    private static final List<String> PATHS_NO_AUTH = List.of("/*/login", "auth/register");
+    private static final List<String> PATHS_NO_AUTH = List.of("/*/login", "/auth/register");
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity, HttpServletRequest request)

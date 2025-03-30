@@ -45,9 +45,9 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private Date created_at;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private Date updated_at;
 
-    @Column(name = "deleted_at", nullable = false)
+    @Column(name = "deleted_at")
     private Date deleted_at;
 }
