@@ -50,4 +50,17 @@ public class User {
 
     @Column(name = "deleted_at")
     private Date deleted_at;
+
+    // Automatically update date when creating user
+    @PrePersist
+    public void prePersist() {
+        created_at = new Date();
+    }
+
+    // Automatically update date when update user
+    @PreUpdate
+    public void preUpdate() {
+        updated_at = new Date();
+    }
+
 }
