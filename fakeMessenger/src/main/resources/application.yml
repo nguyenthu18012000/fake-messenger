@@ -29,3 +29,7 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
+
+jwt:
+  secret: privateKey_it_is_short_so_I_add_some_characters
+  expiration: 1d

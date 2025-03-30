@@ -1,19 +1,16 @@
 package com.main.fakeMessenger.controller;
 
 import com.main.fakeMessenger.base.ApiResponse;
+import com.main.fakeMessenger.base.exception.CustomException;
 import com.main.fakeMessenger.pojo.request.auth.RegisterRequest;
+import com.main.fakeMessenger.pojo.request.auth.UserLoginRequest;
+import com.main.fakeMessenger.pojo.response.auth.UserLoginResponse;
 import com.main.fakeMessenger.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,5 +27,14 @@ public class AuthController {
         return ResponseEntity.ok(new ApiResponse<>("200", "Register successfully", null));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<UserLoginResponse>> login(@Valid @RequestBody UserLoginRequest request) {
+        UserLoginResponse response = authService.login(request);
 
+        if (response == null) {
+            throw new CustomException("Invalid username or password");
+        }
+
+        return ResponseEntity.ok(new ApiResponse<>("200", "Login successfully", response));
+    }
 }
