@@ -28,6 +28,10 @@ public class User {
     @Column(name = "phone", unique = true, length = 20)
     private String phone;
 
+    @Size(max = 100)
+    @Column(name = "username", unique = true, nullable = false, length = 100)
+    private String username;
+
     @Size(max = 255)
     @NotNull
     @Column(name = "password", nullable = false, unique = true)
