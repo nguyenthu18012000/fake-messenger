@@ -1,5 +1,6 @@
 package com.main.fakeMessenger.service.impl;
 
+import com.main.fakeMessenger.pojo.request.auth.ChangePasswordRequest;
 import com.main.fakeMessenger.pojo.request.auth.RegisterRequest;
 import com.main.fakeMessenger.pojo.request.auth.UserLoginRequest;
 import com.main.fakeMessenger.pojo.response.auth.UserLoginResponse;
@@ -22,5 +23,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserLoginResponse login(UserLoginRequest request) {
         return userService.login(request);
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+        userService.changePassword(request);
     }
 }

@@ -2,6 +2,7 @@ package com.main.fakeMessenger.controller;
 
 import com.main.fakeMessenger.base.ApiResponse;
 import com.main.fakeMessenger.base.exception.CustomException;
+import com.main.fakeMessenger.pojo.request.auth.ChangePasswordRequest;
 import com.main.fakeMessenger.pojo.request.auth.RegisterRequest;
 import com.main.fakeMessenger.pojo.request.auth.UserLoginRequest;
 import com.main.fakeMessenger.pojo.response.auth.UserLoginResponse;
@@ -36,5 +37,12 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(new ApiResponse<>("200", "Login successfully", response));
+    }
+
+    @PostMapping("/changePW")
+    public ResponseEntity<ApiResponse> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
+        authService.changePassword(request);
+
+        return ResponseEntity.ok(new ApiResponse<>("200",  "Change password successfully", null));
     }
 }

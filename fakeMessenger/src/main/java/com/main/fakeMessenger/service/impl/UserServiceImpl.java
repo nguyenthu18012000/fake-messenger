@@ -5,6 +5,7 @@ import com.main.fakeMessenger.config.JwtUtil;
 import com.main.fakeMessenger.constant.ErrorConstant;
 import com.main.fakeMessenger.constant.RegexConstant;
 import com.main.fakeMessenger.pojo.entity.User;
+import com.main.fakeMessenger.pojo.request.auth.ChangePasswordRequest;
 import com.main.fakeMessenger.pojo.request.auth.RegisterRequest;
 import com.main.fakeMessenger.pojo.request.auth.UserLoginRequest;
 import com.main.fakeMessenger.pojo.response.auth.UserLoginResponse;
@@ -86,6 +87,38 @@ public class UserServiceImpl implements UserService {
         response.setAccessToken(jwtUtil.generateLoginJwtToken(user));
 
         return response;
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+        if (isInValidUsername(request.getUsername())) {
+            throw new CustomException(ErrorConstant.INVALID_USERNAME_FORMAT);
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmNewPassword())){
+            throw new CustomException(ErrorConstant.INVALID_MATCH_PASSWORD);
+        }
+
+        User user = null;
+        if (isEmail(request.getUsername())) {
+            Optional<User> existedUser = userRepository.findByEmail(request.getUsername());
+            if (existedUser.isPresent()) {
+                user = existedUser.get();
+            }
+        } else {
+            Optional<User> existedUser = userRepository.findByPhone(request.getUsername());
+            if (existedUser.isPresent()) {
+                user = existedUser.get();
+            }
+        }
+
+        if (user == null || !passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new CustomException(ErrorConstant.INVALID_USERNAME_OR_PASSWORD);
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+
+        userRepository.save(user);
     }
 
     public boolean isInValidUsername(String username) {
